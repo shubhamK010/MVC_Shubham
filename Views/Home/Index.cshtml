@@ -1,0 +1,89 @@
+﻿@*@model IEnumerable<MVC_Shubham.Models.Product>*@
+
+@using MVC_Shubham.Models;
+
+@using PagedList;
+
+@using PagedList.Mvc;
+in
+
+@model PagedList.IPagedList<Product>
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    #create {
+       color:"red";
+    }
+
+</style>
+
+
+<h2>Index</h2>
+<h2 id="create">@Html.Raw(ViewBag.CreateMessage)</h2>
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+
+
+        <th>
+            ProductId
+        </th>
+        <th>
+            ProductName
+        </th>
+        <th>
+            CategoryId
+        </th>
+        <th>
+            CategoryName
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
+
+                @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
+
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<div></div>
+Page@(Model.PageCount<Model.PageNumber ? 0: Model.PageNumber)/@Model.PageCount)
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+
+
+</div>
